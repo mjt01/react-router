@@ -70,6 +70,19 @@ describe('isActive', function () {
         })
       })
     })
+
+    describe('with a query that partially matches', function () {
+      it('is not active', function (done) {
+        render((
+          <Router history={createHistory('/home?the=query&something=else')}>
+            <Route path="/home" />
+          </Router>
+        ), node, function () {
+          expect(this.history.isActive('/home', { the: 'query' })).toBe(false)
+          done()
+        })
+      })
+    })
   })
 
   describe('nested routes', function () {
